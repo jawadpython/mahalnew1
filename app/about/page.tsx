@@ -79,13 +79,13 @@ export default function About() {
               presence through exceptional visual communication.
             </p>
             <p>
-              With years of experience in the industry, we've built a reputation for delivering
+              With years of experience in the industry, we&apos;ve built a reputation for delivering
               high-quality printing solutions, custom signage, and comprehensive branding services.
               Our state-of-the-art facility houses the latest technology in digital printing, large
               format printing, laser cutting, and CNC fabrication.
             </p>
             <p>
-              We understand that your brand is your most valuable asset. That's why we approach every
+              We understand that your brand is your most valuable asset. That&apos;s why we approach every
               project with meticulous attention to detail, ensuring that every print, sign, and design
               element reflects the excellence of your brand.
             </p>
