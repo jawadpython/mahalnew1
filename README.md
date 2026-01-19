@@ -49,6 +49,50 @@ npm run build
 npm start
 ```
 
+## Deployment to Vercel
+
+This project is ready to deploy on Vercel. Follow these steps:
+
+### Option 1: Deploy with Vercel CLI
+
+1. Install Vercel CLI globally:
+```bash
+npm i -g vercel
+```
+
+2. Deploy to Vercel:
+```bash
+vercel
+```
+
+3. Follow the prompts to configure your deployment.
+
+### Option 2: Deploy via Vercel Dashboard
+
+1. Push your code to a Git repository (GitHub, GitLab, or Bitbucket).
+
+2. Import your repository:
+   - Go to [vercel.com](https://vercel.com)
+   - Click "Add New..." → "Project"
+   - Import your Git repository
+
+3. Vercel will automatically detect Next.js and configure the build settings.
+
+4. Click "Deploy" - your site will be live in minutes!
+
+### Environment Variables
+
+If you need any environment variables, add them in the Vercel project settings:
+- Go to Project Settings → Environment Variables
+- Add any required variables
+
+### Custom Domain
+
+To add a custom domain:
+1. Go to Project Settings → Domains
+2. Add your custom domain
+3. Follow the DNS configuration instructions
+
 ## Configuration
 
 ### WhatsApp Button
