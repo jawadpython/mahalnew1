@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { FiMail, FiPhone, FiMapPin, FiSend, FiMessageCircle } from 'react-icons/fi';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -69,49 +68,23 @@ export default function Contact() {
   return (
     <div className="min-h-screen pt-20">
       {/* Hero Section */}
-      <section className="relative py-24 bg-gradient-to-br from-dark via-dark-lighter to-dark overflow-hidden">
-        <div className="absolute inset-0">
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.1, 0.2, 0.1],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-            className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary rounded-full blur-3xl"
-          />
-        </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-white">
-              {t('contact.title')}
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
-              {t('contact.subtitle')}
-            </p>
-          </motion.div>
+      <section className="relative py-16 bg-gradient-to-br from-dark via-dark-lighter to-dark">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white">
+            {t('contact.title')}
+          </h1>
+          <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
+            {t('contact.subtitle')}
+          </p>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section className="py-24 bg-dark-lighter">
+      <section className="py-16 bg-dark-lighter">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Contact Form */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="bg-dark p-8 rounded-xl border border-gray-800"
-            >
+            <div className="bg-dark p-6 rounded-lg border border-gray-800">
               <h2 className="text-3xl font-bold text-white mb-6">{t('contact.form.title')}</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -190,12 +163,10 @@ export default function Contact() {
                     placeholder="Tell us about your project..."
                   />
                 </div>
-                <motion.button
+                <button
                   type="submit"
                   disabled={isSubmitting}
-                  whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                  className="w-full px-6 py-4 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg shadow-lg hover:shadow-primary/50 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-6 py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
                     t('contact.form.sending')
@@ -205,27 +176,17 @@ export default function Contact() {
                       <FiSend size={20} />
                     </>
                   )}
-                </motion.button>
+                </button>
                 {submitStatus === 'success' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="p-4 bg-primary/10 border border-primary rounded-lg text-primary text-center"
-                  >
+                  <div className="p-4 bg-primary/10 border border-primary rounded-lg text-primary text-center">
                     {t('contact.form.success')}
-                  </motion.div>
+                  </div>
                 )}
               </form>
-            </motion.div>
+            </div>
 
             {/* Contact Info */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="space-y-6"
-            >
+            <div className="space-y-6">
               <div>
                 <h2 className="text-3xl font-bold text-white mb-6">{t('contact.info.title')}</h2>
                 <p className="text-gray-400 text-lg leading-relaxed mb-8">
@@ -234,20 +195,15 @@ export default function Contact() {
               </div>
 
               <div className="space-y-4">
-                {contactInfo.map((info, index) => {
+                {contactInfo.map((info) => {
                   const Icon = info.icon;
                   return (
-                    <motion.a
+                    <a
                       key={info.title}
                       href={info.link}
                       target={info.link.startsWith('http') ? '_blank' : undefined}
                       rel={info.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      initial={{ opacity: 0, x: 20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      whileHover={{ x: 5 }}
-                      className="flex items-start gap-4 p-6 bg-dark rounded-xl border border-gray-800 hover:border-primary/50 transition-all group"
+                      className="flex items-start gap-4 p-5 bg-dark rounded-lg border border-gray-800 hover:border-primary/50 transition-all"
                     >
                       <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
                         <Icon size={24} className="text-primary" />
@@ -256,25 +212,19 @@ export default function Contact() {
                         <h3 className="text-white font-semibold mb-1">{info.title}</h3>
                         <p className="text-gray-400">{info.content}</p>
                       </div>
-                    </motion.a>
+                    </a>
                   );
                 })}
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Map Section */}
-      <section className="py-16 bg-dark">
+      <section className="py-12 bg-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="bg-dark-lighter rounded-xl border border-gray-800 overflow-hidden"
-          >
+          <div className="bg-dark-lighter rounded-lg border border-gray-800 overflow-hidden">
             <div className="relative h-96 bg-dark-lighter flex items-center justify-center">
               <div className="text-center">
                 <FiMapPin size={64} className="text-primary/30 mx-auto mb-4" />
@@ -293,7 +243,7 @@ export default function Contact() {
                 loading="lazy"
               /> */}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>

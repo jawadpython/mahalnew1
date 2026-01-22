@@ -8,7 +8,7 @@ type LanguageContextType = {
   locale: Locale;
   setLocale: (locale: Locale) => void;
   t: (key: string) => string;
-  dir: 'ltr';
+  dir: 'ltr' | 'rtl';
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -17,24 +17,42 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>('en');
 
   useEffect(() => {
-    // Load saved locale from localStorage
-    const savedLocale = localStorage.getItem('locale') as Locale | null;
-    if (savedLocale && ['en', 'fr'].includes(savedLocale)) {
-      setLocaleState(savedLocale);
+    // Load saved locale from localStorage (client-side only)
+    if (typeof window !== 'undefined') {
+      const savedLocale = localStorage.getItem('locale') as Locale | null;
+      if (savedLocale && ['en', 'fr', 'ar'].includes(savedLocale)) {
+        setLocaleState(savedLocale);
+      }
     }
   }, []);
 
   const setLocale = (newLocale: Locale) => {
     setLocaleState(newLocale);
-    localStorage.setItem('locale', newLocale);
-    document.documentElement.dir = 'ltr';
-    document.documentElement.lang = newLocale;
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('locale', newLocale);
+      if (typeof document !== 'undefined') {
+        if (newLocale === 'ar') {
+          document.documentElement.dir = 'rtl';
+          document.documentElement.lang = 'ar';
+        } else {
+          document.documentElement.dir = 'ltr';
+          document.documentElement.lang = newLocale;
+        }
+      }
+    }
   };
 
   useEffect(() => {
-    // Set initial dir and lang
-    document.documentElement.dir = 'ltr';
-    document.documentElement.lang = locale;
+    // Set initial dir and lang (client-side only)
+    if (typeof document !== 'undefined') {
+      if (locale === 'ar') {
+        document.documentElement.dir = 'rtl';
+        document.documentElement.lang = 'ar';
+      } else {
+        document.documentElement.dir = 'ltr';
+        document.documentElement.lang = locale;
+      }
+    }
   }, [locale]);
 
   const t = (key: string): string => {
@@ -52,7 +70,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     return typeof value === 'string' ? value : key;
   };
 
-  const dir = 'ltr';
+  const dir = locale === 'ar' ? 'rtl' : 'ltr';
 
   return (
     <LanguageContext.Provider value={{ locale, setLocale, t, dir }}>

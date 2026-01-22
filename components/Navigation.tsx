@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -13,6 +12,8 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
@@ -29,10 +30,7 @@ export default function Navigation() {
   ];
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+    <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? 'bg-dark/95 backdrop-blur-md shadow-lg'
@@ -43,14 +41,10 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="text-2xl font-bold text-white"
-            >
+            <div className="text-2xl font-bold text-white">
               <span className="text-primary">MAESTRO</span>
               <span className="text-gray-300"> Print</span>
-            </motion.div>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -89,14 +83,9 @@ export default function Navigation() {
       </div>
 
       {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-dark-lighter border-t border-gray-800"
-          >
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-dark-lighter border-t border-gray-800"
+        >
             <div className="px-4 py-6 space-y-4">
               {navItems.map((item) => (
                 <Link
@@ -116,9 +105,8 @@ export default function Navigation() {
                 {t('nav.getQuote')}
               </Link>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+        </div>
+      )}
+    </nav>
   );
 }
